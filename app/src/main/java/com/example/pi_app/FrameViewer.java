@@ -44,20 +44,17 @@ public class FrameViewer extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_frame_viewer);
+        mFrameView = findViewById(R.id.frameView);
 
-
-
-
+        // Get file selected in list of detections
         String selectedFile = getIntent().getStringExtra("fileName");
 
+        // Get ip from shared preferences
         SharedPreferences sp = getSharedPreferences("sp", MODE_PRIVATE);
         ip = sp.getString("ip","");
         System.out.println(ip);
 
-
-        mFrameView = findViewById(R.id.frameView);
-
-
+        // Send post request to get frame of selected file from server
         new getFrameAsync(this, mFrameView, ip, selectedFile).execute();
 
     }
@@ -66,6 +63,7 @@ public class FrameViewer extends AppCompatActivity {
 
 
     public static class getFrameAsync extends AsyncTask<String, Void, Bitmap> {
+        // Post request to get frame of selected file
         private WeakReference<ImageView> mFrameView;
         private WeakReference<Context> contextRef;
         private WeakReference<String> ipRef;
@@ -103,6 +101,8 @@ public class FrameViewer extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
+            // Store received image as bitmap
             InputStream inputStream = response.body().byteStream();
             Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
 
@@ -112,6 +112,7 @@ public class FrameViewer extends AppCompatActivity {
         @Override
         protected void onPostExecute(Bitmap bitmap) {
             super.onPostExecute(bitmap);
+            // Display bitmap image
             mFrameView.get().setImageBitmap(bitmap);
         }
     }

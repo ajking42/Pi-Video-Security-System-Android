@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        viewDetectionButton = findViewById(R.id.viewDetectionsButton);
 
         //Initialise shared preferences to store base server url
         mPreferences = getSharedPreferences("sp", MODE_PRIVATE);
@@ -34,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         preferencesEditor.putString("ip", "http://192.168.0.23:5000/");
         preferencesEditor.apply();
 
-        viewDetectionButton = findViewById(R.id.viewDetectionsButton);
+
 
 
 

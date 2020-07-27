@@ -36,17 +36,17 @@ public class DetectionAlertActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detection_alert);
-
+        mDetectionsListView = findViewById(R.id.detectionListView);
+        mrefreshButton = findViewById(R.id.refreshButton); // Manual sync button for list
 
         //Get ip address
         SharedPreferences sp = getSharedPreferences("sp", MODE_PRIVATE);
         ip = sp.getString("ip", "");
 
-
-        mDetectionsListView = findViewById(R.id.detectionListView);
-        mrefreshButton = findViewById(R.id.refreshButton);
-
+        // Execute get request to ask server for list of most recent detections
         new getRecentDetectionsAsync(this, mDetectionsListView, ip).execute();
+
+        // Set get request for syncing list manually using refresh button
         mrefreshButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -55,6 +55,7 @@ public class DetectionAlertActivity extends AppCompatActivity {
         });
 
 
+        //When item in list is clicked, file name is stored in intent, and user is taken to the FrameViewer page
         mDetectionsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -93,6 +94,7 @@ public class DetectionAlertActivity extends AppCompatActivity {
                 Response response = client.newCall(request).execute();
                 JSONArray myResponse = new JSONArray(response.body().string());
 
+                // Convert json array into arraylist
                 for (int i = 0; i < myResponse.length(); i++) {
                     recentDetections.add(myResponse.getString(i));
                 }
@@ -106,6 +108,7 @@ public class DetectionAlertActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(ArrayList result) {
             ArrayAdapter adapter = new ArrayAdapter<String>(contextRef.get(), R.layout.support_simple_spinner_dropdown_item, result);
+            // Display files in listview using ArrayAdaptor
             mDetectionList.get().setAdapter(adapter);
         }
     }
