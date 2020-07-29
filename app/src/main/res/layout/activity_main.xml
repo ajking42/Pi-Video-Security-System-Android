@@ -11,11 +11,22 @@
         android:id="@+id/viewDetectionsButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="See recent detections"
         android:onClick="seeDetections"
+        android:text="See recent detections"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.499" />
+        app:layout_constraintVertical_bias="0.285" />
+
+    <Button
+        android:id="@+id/viewStreamButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="View Live Stream"
+        android:onClick="viewStream"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/viewDetectionsButton" />
 </androidx.constraintlayout.widget.ConstraintLayout>

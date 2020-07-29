@@ -21,6 +21,8 @@ public class MainActivity extends AppCompatActivity {
 
     private SharedPreferences mPreferences;
     private Button viewDetectionButton;
+    private Button viewStreamButton;
+
     public final OkHttpClient client = new OkHttpClient();
 
     @Override
@@ -28,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         viewDetectionButton = findViewById(R.id.viewDetectionsButton);
+        viewStreamButton = findViewById(R.id.viewStreamButton);
 
         //Initialise shared preferences to store base server url
         mPreferences = getSharedPreferences("sp", MODE_PRIVATE);
@@ -47,5 +50,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    public void viewStream(View view) {
+        Intent intent = new Intent(MainActivity.this, ViewStreamActivity.class);
+        startActivity(intent);
 
+    }
 }

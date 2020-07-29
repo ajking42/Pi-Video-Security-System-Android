@@ -12,7 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".FrameViewer"></activity>
+        <activity android:name=".ViewStreamActivity"></activity>
+        <activity android:name=".FrameViewer" />
         <activity android:name=".DetectionAlertActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
