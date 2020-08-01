@@ -7,21 +7,15 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
-import java.io.IOException;
-
-import okhttp3.Call;
-import okhttp3.Callback;
 import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity {
 
     private SharedPreferences mPreferences;
     private Button viewDetectionButton;
     private Button viewStreamButton;
+    private Button viewRecordings;
 
     public final OkHttpClient client = new OkHttpClient();
 
@@ -31,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         viewDetectionButton = findViewById(R.id.viewDetectionsButton);
         viewStreamButton = findViewById(R.id.viewStreamButton);
+        viewRecordings = findViewById(R.id.viewRecordingsButton);
 
         //Initialise shared preferences to store base server url
         mPreferences = getSharedPreferences("sp", MODE_PRIVATE);
@@ -38,14 +33,13 @@ public class MainActivity extends AppCompatActivity {
         preferencesEditor.putString("ip", "http://192.168.0.23:5000/");
         preferencesEditor.apply();
 
-
-
+        //TODO: add video request button
 
 
     }
 
     public void seeDetections(View view) {
-        Intent intent = new Intent(MainActivity.this, DetectionAlertActivity.class);
+        Intent intent = new Intent(MainActivity.this, DetectionFrameFileListActivity.class);
         startActivity(intent);
     }
 
@@ -54,5 +48,10 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(MainActivity.this, ViewStreamActivity.class);
         startActivity(intent);
 
+    }
+
+    public void viewRecordings(View view) {
+        Intent intent = new Intent(MainActivity.this, RecordingsFileListActivity.class);
+        startActivity(intent);
     }
 }

@@ -12,9 +12,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ViewStreamActivity"></activity>
-        <activity android:name=".FrameViewer" />
-        <activity android:name=".DetectionAlertActivity" />
+        <activity android:name=".RecordingViewerActivity"></activity>
+        <activity android:name=".RecordingsFileListActivity" />
+        <activity android:name=".ViewStreamActivity" />
+        <activity android:name=".FrameViewerActivity" />
+        <activity android:name=".DetectionFrameFileListActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
