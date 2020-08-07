@@ -59,6 +59,7 @@ public class GetFrameBitmapAsyncTask extends AsyncTask<String, Void, Bitmap> {
         // Store received image as bitmap
         InputStream inputStream = response.body().byteStream();
         Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+        response.body().close();
 
         return bitmap;
     }

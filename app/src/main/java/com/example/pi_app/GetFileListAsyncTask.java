@@ -45,6 +45,7 @@ public class GetFileListAsyncTask extends AsyncTask <String, Void, ArrayList<Str
             for (int i = 0; i < myResponse.length(); i++) {
                 fileArrayList.add(myResponse.getString(i));
             }
+            response.body().close();
 
         } catch (IOException | JSONException e) {
             e.printStackTrace();

@@ -20,7 +20,7 @@ public class ViewStreamActivity extends AppCompatActivity {
         SharedPreferences sp = getSharedPreferences("sp", MODE_PRIVATE);
         ip = sp.getString("ip", "");
 
-        streamView.loadUrl(ip + "/streaming");
+        streamView.loadUrl(ip + "streaming");
 
     }
 }
