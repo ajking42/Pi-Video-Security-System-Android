@@ -33,7 +33,9 @@ public class FrameViewerActivity extends AppCompatActivity {
         // Send post request to get frame of selected file from server
         new GetFrameBitmapAsyncTask(mFrameView, ip, selectedFile).execute();
 
+
         // TODO: add left and right buttons and make frame list cyclable
 
     }
+
 }

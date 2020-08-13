@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.lang.ref.WeakReference;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -20,13 +21,21 @@ import okhttp3.Response;
 
 public class DownloadFileAsyncTask extends AsyncTask <String, Void, File> {
     // TODO: Need to sort out android permissions in order to download files
+    private WeakReference<String> ipRef;
+    private WeakReference<String> mFileName;
+
+
+    public DownloadFileAsyncTask(String ip, String fileName) {
+        ipRef = new WeakReference<String>(ip);
+        mFileName = new WeakReference<String>(fileName);
+    }
 
     @Override
     protected File doInBackground(String... strings) {
-        String ip = "http://192.168.0.23:5000/video_storage/07-31-2020,%2013:56:35.mp4";
+        String url = ipRef.get() + "/video_storage/" + mFileName.get();
         OkHttpClient client = new OkHttpClient.Builder().build();
         Request request = new Request.Builder()
-                .url(ip)
+                .url(url)
                 .build();
         File downloadFile = new File(Environment.getDownloadCacheDirectory().toString(), "output.mp4");
 
