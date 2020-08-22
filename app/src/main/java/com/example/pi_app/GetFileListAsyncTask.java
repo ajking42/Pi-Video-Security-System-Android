@@ -23,9 +23,9 @@ public class GetFileListAsyncTask extends AsyncTask <String, Void, ArrayList<Str
     private WeakReference<Context> contextRef;
     private WeakReference<String> ipRef;
 
-    public GetFileListAsyncTask(Context context, ListView detectionList, String ip) {
+    public GetFileListAsyncTask(Context context, ListView listView, String ip) {
         contextRef = new WeakReference<Context>(context);
-        mFileList = new WeakReference<ListView>(detectionList);
+        mFileList = new WeakReference<ListView>(listView);
         ipRef = new WeakReference<String>(ip);
     }
 

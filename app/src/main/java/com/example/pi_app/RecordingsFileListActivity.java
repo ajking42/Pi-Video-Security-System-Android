@@ -117,4 +117,8 @@ public class RecordingsFileListActivity extends AppCompatActivity {
     }
 
 
+    public void setSettingsClickAction(MenuItem item) {
+        Intent settingsIntent = new Intent(RecordingsFileListActivity.this, SettingsActivity.class);
+        startActivity(settingsIntent);
+    }
 }

@@ -14,5 +14,6 @@
         android:icon="@drawable/settings_foreground"
         android:title="Settings"
         app:showAsAction="always"
-        android:iconTint="@color/colorAccent"/>
+        android:iconTint="@color/colorAccent"
+        />
 </menu>

@@ -12,8 +12,7 @@ public class FrameViewerActivity extends AppCompatActivity {
 
     private String ip;
     private ImageView mFrameView;
-    private Bitmap frame;
-    private String frameString;
+
 
 
     @Override

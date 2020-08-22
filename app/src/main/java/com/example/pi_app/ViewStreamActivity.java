@@ -58,7 +58,7 @@ public class ViewStreamActivity extends AppCompatActivity {
         return true;
     }
 
-    public void setBottomNavigationIntents(BottomNavigationView bottomNavigationView) {
+    private void setBottomNavigationIntents(BottomNavigationView bottomNavigationView) {
         Menu menu = bottomNavigationView.getMenu();
         MenuItem menuItem = menu.getItem(0);
         menuItem.setChecked(true);

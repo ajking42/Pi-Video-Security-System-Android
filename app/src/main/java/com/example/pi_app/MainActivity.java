@@ -6,23 +6,25 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 import okhttp3.OkHttpClient;
 
 public class MainActivity extends AppCompatActivity {
 
     private SharedPreferences mPreferences;
-    private Button viewDetectionButton;
-    private Button viewStreamButton;
-    private Button viewRecordings;
-
     public final OkHttpClient client = new OkHttpClient();
 
     @Override
@@ -30,7 +32,23 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        setBottomBar();
+        getFirebaseID();
 
+        //Initialise shared preferences to store base server url
+        mPreferences = getSharedPreferences("sp", MODE_PRIVATE);
+        SharedPreferences.Editor preferencesEditor = mPreferences.edit();
+        preferencesEditor.putString("ip", "http://192.168.0.34:5000/");
+        preferencesEditor.apply();
+
+
+
+
+
+    }
+
+
+    private void setBottomBar() {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomBar);
         Menu menu = bottomNavigationView.getMenu();
         MenuItem menuItem = menu.getItem(1);
@@ -64,44 +82,50 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
-
-
-        //Initialise shared preferences to store base server url
-        mPreferences = getSharedPreferences("sp", MODE_PRIVATE);
-        SharedPreferences.Editor preferencesEditor = mPreferences.edit();
-        preferencesEditor.putString("ip", "http://192.168.0.34:5000/");
-        preferencesEditor.apply();
-
-
-
-
-    }
-
-    public void seeDetections(View view) {
-        Intent intent = new Intent(MainActivity.this, DetectionFrameFileListActivity.class);
-        startActivity(intent);
     }
 
 
-    public void viewStream(View view) {
-        Intent intent = new Intent(MainActivity.this, ViewStreamActivity.class);
-        startActivity(intent);
-
-    }
-
-    public void viewRecordings(View view) {
-        Intent intent = new Intent(MainActivity.this, RecordingsFileListActivity.class);
-        startActivity(intent);
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.actionbar_menu, menu);
+        menu.getItem(1).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                Intent settingsIntent = new Intent(MainActivity.this, SettingsActivity.class);
+                startActivity(settingsIntent);
+                return false;
+            }
+        });
         return true;
     }
 
     public void setSyncClickAction(MenuItem item) {
 
+    }
+
+    public void setSettingsClickAction(MenuItem item) {
+
+    }
+
+    private void getFirebaseID() {
+        String token = "";
+        FirebaseInstanceId.getInstance().getInstanceId()
+                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                        if (!task.isSuccessful()) {
+                            Log.w("getInstanceId failed", task.getException());
+                            return;
+                        }
+
+                        // Get new Instance ID token
+                        String token = task.getResult().getToken();
+                        new SendFirebaseDeviceTokenAsyncTask(token, "http://192.168.0.34:5000/").execute();
+
+                        System.out.println(token);
+                    }
+                });
     }
 }

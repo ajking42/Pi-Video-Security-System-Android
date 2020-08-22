@@ -25,7 +25,6 @@ public class DetectionFrameFileListActivity extends AppCompatActivity {
     //Displays a list of recent detections with their detection times and links to associated frames
     private OkHttpClient client = new OkHttpClient.Builder().build();
     private ListView mDetectionsListView;
-    private Button mrefreshButton;
     private String ip;
 
 
@@ -47,7 +46,7 @@ public class DetectionFrameFileListActivity extends AppCompatActivity {
         // Execute get request to ask server for list of most recent detections
         new GetFileListAsyncTask(this, mDetectionsListView, ip).execute();
 
-        displayNoFilesToast();
+
 
         //When item in list is clicked, file name is stored in intent, and user is taken to the FrameViewer page
         mDetectionsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -59,6 +58,10 @@ public class DetectionFrameFileListActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        if(mDetectionsListView.getAdapter() == null) {
+            displayNoFilesToast();
+        }
     }
 
     @Override
@@ -68,7 +71,7 @@ public class DetectionFrameFileListActivity extends AppCompatActivity {
         return true;
     }
 
-    public void setBottomNavigationIntents(BottomNavigationView bottomNavigationView) {
+    private void setBottomNavigationIntents(BottomNavigationView bottomNavigationView) {
         //Set bottom navigation intents
         Menu menu = bottomNavigationView.getMenu();
         MenuItem menuItem = menu.getItem(2);
@@ -111,12 +114,12 @@ public class DetectionFrameFileListActivity extends AppCompatActivity {
         new GetFileListAsyncTask(this, mDetectionsListView, ip).execute();
     }
 
-    public void displayNoFilesToast() {
+    private void displayNoFilesToast() {
         // Display toast if no files are found or server request fails
-        if(mDetectionsListView.getAdapter() == null) {
+
             Toast toast = Toast.makeText(DetectionFrameFileListActivity.this, "No files found. Check system connections and try again.", Toast.LENGTH_SHORT);
             toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
             toast.show();
-        }
+
     }
 }
