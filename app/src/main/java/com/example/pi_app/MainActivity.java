@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         //Initialise shared preferences to store base server url
         mPreferences = getSharedPreferences("sp", MODE_PRIVATE);
         SharedPreferences.Editor preferencesEditor = mPreferences.edit();
-        preferencesEditor.putString("ip", "http://192.168.0.34:5000/");
+        preferencesEditor.putString("ip", "http://192.168.0.23:5000/");
         preferencesEditor.apply();
 
 
@@ -122,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
 
                         // Get new Instance ID token
                         String token = task.getResult().getToken();
-                        new SendFirebaseDeviceTokenAsyncTask(token, "http://192.168.0.34:5000/").execute();
+                        new SendFirebaseDeviceTokenAsyncTask(token, "http://192.168.0.23:5000/").execute();
 
                         System.out.println(token);
                     }

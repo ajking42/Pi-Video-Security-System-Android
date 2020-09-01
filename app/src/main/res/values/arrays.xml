@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="models" >
+        <item>Fast</item>
+        <item>Accurate</item>
+    </string-array>
+    <string-array name="modelsData">
+        <item>ssd_mobilenet_v3_small</item>
+        <item>ssd_mobilenet_v3_large</item>
+    </string-array>
+
+    <string-array name="categories" >
+        <item>Person</item>
+        <item>Dog</item>
+        <item>Car</item>
+    </string-array>
+
+
+</resources>

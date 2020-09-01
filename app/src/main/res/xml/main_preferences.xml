@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="Android Settings"
+        android:layout="@layout/activity_settings">
+        <SwitchPreference
+            />
+
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="Raspberry Pi Settings"
+        android:layout="@layout/activity_settings">
+        <Preference
+            android:key="resetBD"
+            android:title="Update Pi Settings"
+            android:summary="Please ensure the device has a connection to the Raspberry Pi"
+            android:widgetLayout="@layout/pref_reset_bd_button" />
+        <ListPreference
+            android:title="Detection Model"
+            android:key="model_preference"
+            android:entries="@array/models"
+            android:entryValues="@array/modelsData"
+            android:defaultValue="ssd_mobilenet_v3_large"
+            android:summary="%s"/>
+        <MultiSelectListPreference
+            android:defaultValue="@array/categories"
+            android:entries="@array/categories"
+            android:entryValues="@array/categories"
+            android:key="categories"
+            android:title="Select Detection Categories" />
+    </PreferenceCategory>
+
+
+
+</PreferenceScreen>

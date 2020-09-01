@@ -2,6 +2,7 @@ package com.example.pi_app;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.view.Gravity;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -22,6 +23,7 @@ public class GetFileListAsyncTask extends AsyncTask <String, Void, ArrayList<Str
     private WeakReference<ListView> mFileList;
     private WeakReference<Context> contextRef;
     private WeakReference<String> ipRef;
+    private boolean success;
 
     public GetFileListAsyncTask(Context context, ListView listView, String ip) {
         contextRef = new WeakReference<Context>(context);
@@ -47,9 +49,11 @@ public class GetFileListAsyncTask extends AsyncTask <String, Void, ArrayList<Str
                 fileArrayList.add(myResponse.getString(i));
             }
             response.body().close();
+            success = true;
 
         } catch (IOException | JSONException e) {
             e.printStackTrace();
+            success = false;
         }
         return fileArrayList;
     }
@@ -60,5 +64,14 @@ public class GetFileListAsyncTask extends AsyncTask <String, Void, ArrayList<Str
         ArrayAdapter adapter = new ArrayAdapter<String>(contextRef.get(), R.layout.support_simple_spinner_dropdown_item, result);
         // Display files in listview using ArrayAdaptor
         mFileList.get().setAdapter(adapter);
+        if(result.isEmpty() && success) {
+            Toast toast = Toast.makeText(contextRef.get(), "No files found.", Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+            toast.show();
+        } else if (result.isEmpty() && !success) {
+            Toast toast = Toast.makeText(contextRef.get(), "Connection to server failed.", Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+            toast.show();
+        }
     }
 }

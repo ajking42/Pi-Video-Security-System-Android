@@ -24,6 +24,7 @@ public class GetFrameBitmapAsyncTask extends AsyncTask<String, Void, Bitmap> {
     private WeakReference<String> ipRef;
     private WeakReference<String> mFileName;
     private OkHttpClient client = new OkHttpClient.Builder().build();
+    private boolean success;
 
     public GetFrameBitmapAsyncTask(ImageView imageView, String ip, String fileName) {
         mImageView = new WeakReference<ImageView>(imageView);

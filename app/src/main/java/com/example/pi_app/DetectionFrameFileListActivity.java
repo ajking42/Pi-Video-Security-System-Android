@@ -59,9 +59,7 @@ public class DetectionFrameFileListActivity extends AppCompatActivity {
             }
         });
 
-        if(mDetectionsListView.getAdapter() == null) {
-            displayNoFilesToast();
-        }
+
     }
 
     @Override
@@ -114,12 +112,5 @@ public class DetectionFrameFileListActivity extends AppCompatActivity {
         new GetFileListAsyncTask(this, mDetectionsListView, ip).execute();
     }
 
-    private void displayNoFilesToast() {
-        // Display toast if no files are found or server request fails
 
-            Toast toast = Toast.makeText(DetectionFrameFileListActivity.this, "No files found. Check system connections and try again.", Toast.LENGTH_SHORT);
-            toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
-            toast.show();
-
-    }
 }

@@ -44,7 +44,6 @@ public class RecordingsFileListActivity extends AppCompatActivity {
         // Execute get request to ask server for list of most recent detections
         new GetFileListAsyncTask(this, mRecordingsListView, ip).execute();
 
-        displayNoFilesToast();
 
 
 
@@ -108,17 +107,4 @@ public class RecordingsFileListActivity extends AppCompatActivity {
         new GetFileListAsyncTask(this, mRecordingsListView, ip).execute();
     }
 
-    public void displayNoFilesToast() {
-        if(mRecordingsListView.getAdapter() == null) {
-            Toast toast = Toast.makeText(RecordingsFileListActivity.this, "No files found. Check system connections and try again.", Toast.LENGTH_SHORT);
-            toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
-            toast.show();
-        }
-    }
-
-
-    public void setSettingsClickAction(MenuItem item) {
-        Intent settingsIntent = new Intent(RecordingsFileListActivity.this, SettingsActivity.class);
-        startActivity(settingsIntent);
-    }
 }
