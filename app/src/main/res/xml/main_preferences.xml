@@ -30,6 +30,27 @@
             android:entryValues="@array/categories"
             android:key="categories"
             android:title="Select Detection Categories" />
+        <EditTextPreference
+            android:defaultValue="100"
+            android:key="max_ImStorage"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="Max. Image Storage (MB)"
+            android:inputType="number"/>
+        <EditTextPreference
+            android:defaultValue="100"
+            android:key="max_VidStorage"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="Max. Video Storage (MB)"
+            android:inputType="number"/>
+        <EditTextPreference
+            android:defaultValue="5"
+            android:key="notify_period"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="Repeat Notification Period (s)"
+            android:inputType="number"/>
     </PreferenceCategory>
 
 

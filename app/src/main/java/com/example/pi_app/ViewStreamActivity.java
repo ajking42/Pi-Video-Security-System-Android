@@ -51,13 +51,6 @@ public class ViewStreamActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.actionbar_menu, menu);
-        return true;
-    }
-
     private void setBottomNavigationIntents(BottomNavigationView bottomNavigationView) {
         Menu menu = bottomNavigationView.getMenu();
         MenuItem menuItem = menu.getItem(0);
@@ -96,5 +89,20 @@ public class ViewStreamActivity extends AppCompatActivity {
 
     public void setSyncClickAction(MenuItem item) {
         streamView.loadUrl(ip + "streaming");
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.actionbar_menu, menu);
+        menu.getItem(1).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                Intent settingsIntent = new Intent(ViewStreamActivity.this, SettingsActivity.class);
+                startActivity(settingsIntent);
+                return false;
+            }
+        });
+        return true;
     }
 }

@@ -59,6 +59,15 @@ public class DetectionFrameFileListActivity extends AppCompatActivity {
             }
         });
 
+        mDetectionsListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                String selectedFile = (String) adapterView.getItemAtPosition(i);
+                new DownloadFileAsyncTask(ip, selectedFile, "detection_storage").execute();
+                return true;
+            }
+        });
+
 
     }
 
@@ -66,6 +75,14 @@ public class DetectionFrameFileListActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.actionbar_menu, menu);
+        menu.getItem(1).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                Intent settingsIntent = new Intent(DetectionFrameFileListActivity.this, SettingsActivity.class);
+                startActivity(settingsIntent);
+                return false;
+            }
+        });
         return true;
     }
 

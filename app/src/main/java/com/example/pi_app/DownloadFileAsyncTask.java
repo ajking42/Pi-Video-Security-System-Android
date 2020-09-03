@@ -3,6 +3,8 @@ package com.example.pi_app;
 import android.app.DownloadManager;
 import android.os.AsyncTask;
 import android.os.Environment;
+import android.util.Log;
+import android.widget.Toast;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -23,41 +25,61 @@ public class DownloadFileAsyncTask extends AsyncTask <String, Void, File> {
     // TODO: Need to sort out android permissions in order to download files
     private WeakReference<String> ipRef;
     private WeakReference<String> mFileName;
+    private WeakReference<String> fileDirRef;
 
 
-    public DownloadFileAsyncTask(String ip, String fileName) {
+    public DownloadFileAsyncTask(String ip, String fileName, String fileDir) {
         ipRef = new WeakReference<String>(ip);
         mFileName = new WeakReference<String>(fileName);
+        fileDirRef = new WeakReference<String>(fileDir);
     }
 
     @Override
     protected File doInBackground(String... strings) {
-        String url = ipRef.get() + "/video_storage/" + mFileName.get();
+
+        String url = ipRef.get() + fileDirRef.get() + "/" + mFileName.get();
+
         OkHttpClient client = new OkHttpClient.Builder().build();
+        System.out.println(url);
+
         Request request = new Request.Builder()
                 .url(url)
                 .build();
-        File downloadFile = new File(Environment.getDownloadCacheDirectory().toString(), "output.mp4");
 
+        Response response = null;
         try {
-            Response response = client.newCall(request).execute();
+            response = client.newCall(request).execute();
+
 
             InputStream in = response.body().byteStream();
 
-            byte[] bytes = new byte[in.available()];
-            in.read(bytes);
+            File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), mFileName.get());
+            OutputStream output = new FileOutputStream(file);
 
+            byte data[] = new byte[1024];
+            int count;
+            long total = 0;
 
-            FileOutputStream fileOutputStream = new FileOutputStream(downloadFile);
-
-            fileOutputStream.write(bytes);
-
+            while ((count = in.read(data)) != -1) {
+                total += count;
+                output.write(data, 0, count);
+                System.out.println(count);
+            }
+            System.out.println(count);
+            output.flush();
+            output.close();
+            in.close();
+            response.close();
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        return downloadFile;
+        return null;
     }
 
+    @Override
+    protected void onProgressUpdate(Void... values) {
+        super.onProgressUpdate(values);
+
+    }
 }

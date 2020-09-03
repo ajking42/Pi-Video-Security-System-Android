@@ -29,8 +29,6 @@ public class SettingsActivity extends PreferenceActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.main_preferences);
-        Preference preference = findPreference("model_preference");
-        System.out.println(preference);
         SharedPreferences sp = getSharedPreferences("sp", MODE_PRIVATE);
         ip = sp.getString("ip", "");
     }
@@ -47,5 +45,7 @@ public class SettingsActivity extends PreferenceActivity {
         new UpdatePiSettingsAsyncTask(settingsJson, ip).execute();
 
     }
+
+
 
 }

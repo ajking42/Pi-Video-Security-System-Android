@@ -105,10 +105,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void setSettingsClickAction(MenuItem item) {
-
-    }
-
     private void getFirebaseID() {
         String token = "";
         FirebaseInstanceId.getInstance().getInstanceId()
