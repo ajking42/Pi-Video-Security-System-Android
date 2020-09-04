@@ -1,8 +1,10 @@
 package com.example.pi_app;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -15,7 +17,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,17 +40,41 @@ public class SettingsActivity extends PreferenceActivity {
     }
 
     public void updatePiSettings(View view) throws JSONException {
-        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(this);
+        new AlertDialog.Builder(SettingsActivity.this)
+                .setTitle("Warning")
+                .setMessage("In order to update Pi settings, the Pi system will be restarted.")
+                .setPositiveButton("Restart Pi", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this);
 
-        String settingsString = settings.getAll().toString().toLowerCase();
+                        String settingsString = settings.getAll().toString().toLowerCase();
 
-        String settingsJsonFormat = settingsString.replace('=', ':');
+                        String settingsJsonFormat = settingsString.replace('=', ':');
 
-        JSONObject settingsJson = new JSONObject(settingsJsonFormat);
+                        JSONObject settingsJson = null;
+                        try {
+                            settingsJson = new JSONObject(settingsJsonFormat);
+                        new UpdatePiSettingsAsyncTask(settingsJson, ip).execute();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
 
-        new UpdatePiSettingsAsyncTask(settingsJson, ip).execute();
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                })
+                .create().show();
+
+
 
     }
+
+
 
 
 

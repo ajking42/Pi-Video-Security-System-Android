@@ -24,8 +24,6 @@ import okhttp3.OkHttpClient;
 
 public class MainActivity extends AppCompatActivity {
 
-    private SharedPreferences mPreferences;
-    public final OkHttpClient client = new OkHttpClient();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,19 +31,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         setBottomBar();
-        getFirebaseID();
-
-        //Initialise shared preferences to store base server url
-        mPreferences = getSharedPreferences("sp", MODE_PRIVATE);
-        SharedPreferences.Editor preferencesEditor = mPreferences.edit();
-        preferencesEditor.putString("ip", "http://192.168.0.23:5000/");
-        preferencesEditor.apply();
-
 
 
 
 
     }
+
+
+
 
 
     private void setBottomBar() {
@@ -105,23 +98,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void getFirebaseID() {
-        String token = "";
-        FirebaseInstanceId.getInstance().getInstanceId()
-                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
-                        if (!task.isSuccessful()) {
-                            Log.w("getInstanceId failed", task.getException());
-                            return;
-                        }
 
-                        // Get new Instance ID token
-                        String token = task.getResult().getToken();
-                        new SendFirebaseDeviceTokenAsyncTask(token, "http://192.168.0.23:5000/").execute();
 
-                        System.out.println(token);
-                    }
-                });
-    }
 }

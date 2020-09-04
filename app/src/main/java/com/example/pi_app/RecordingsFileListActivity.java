@@ -64,7 +64,7 @@ public class RecordingsFileListActivity extends AppCompatActivity {
 
                 if(ContextCompat.checkSelfPermission(RecordingsFileListActivity.this,
                         Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-                    new DownloadFileAsyncTask(ip, selectedFile, "video_storage").execute();
+                    new DownloadFileAsyncTask(ip, selectedFile, "video_storage", RecordingsFileListActivity.this).execute();
 
                 } else if(ActivityCompat.shouldShowRequestPermissionRationale(RecordingsFileListActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
                     new AlertDialog.Builder(RecordingsFileListActivity.this)
@@ -73,7 +73,7 @@ public class RecordingsFileListActivity extends AppCompatActivity {
                             .setPositiveButton("ok", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
-                                    new DownloadFileAsyncTask(ip, selectedFile, "video_storage").execute();
+                                    new DownloadFileAsyncTask(ip, selectedFile, "video_storage", RecordingsFileListActivity.this).execute();
 
                                 }
                             })

@@ -17,10 +17,10 @@
         <activity android:name=".SettingsActivity"></activity>
         <activity android:name=".RecordingViewerActivity" />
         <activity android:name=".RecordingsFileListActivity" />
-        <activity android:name=".ViewStreamActivity" />
+        <activity android:name=".MainActivity" />
         <activity android:name=".FrameViewerActivity" />
         <activity android:name=".DetectionFrameFileListActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".ViewStreamActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

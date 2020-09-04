@@ -63,7 +63,7 @@ public class DetectionFrameFileListActivity extends AppCompatActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
                 String selectedFile = (String) adapterView.getItemAtPosition(i);
-                new DownloadFileAsyncTask(ip, selectedFile, "detection_storage").execute();
+                new DownloadFileAsyncTask(ip, selectedFile, "detection_storage", DetectionFrameFileListActivity.this).execute();
                 return true;
             }
         });

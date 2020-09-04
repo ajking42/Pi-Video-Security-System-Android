@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,15 +18,31 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
+
+import okhttp3.OkHttpClient;
 
 public class ViewStreamActivity extends AppCompatActivity {
     private WebView streamView;
     private String ip;
+    private SharedPreferences mPreferences;
+    public final OkHttpClient client = new OkHttpClient();
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //Initialise shared preferences to store base server url
+        getFirebaseID();
+        mPreferences = getSharedPreferences("sp", MODE_PRIVATE);
+        SharedPreferences.Editor preferencesEditor = mPreferences.edit();
+        preferencesEditor.putString("ip", "http://192.168.0.23:5000/");
+        preferencesEditor.apply();
         setContentView(R.layout.activity_view_stream);
         streamView = findViewById(R.id.streamWebView);
 
@@ -104,5 +121,25 @@ public class ViewStreamActivity extends AppCompatActivity {
             }
         });
         return true;
+    }
+
+    private void getFirebaseID() {
+        String token = "";
+        FirebaseInstanceId.getInstance().getInstanceId()
+                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                        if (!task.isSuccessful()) {
+                            Log.w("getInstanceId failed", task.getException());
+                            return;
+                        }
+
+                        // Get new Instance ID token
+                        String token = task.getResult().getToken();
+                        new SendFirebaseDeviceTokenAsyncTask(token, "http://192.168.0.23:5000/").execute();
+
+                        System.out.println(token);
+                    }
+                });
     }
 }
