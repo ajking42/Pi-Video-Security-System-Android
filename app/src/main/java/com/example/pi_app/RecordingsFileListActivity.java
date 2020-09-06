@@ -56,41 +56,27 @@ public class RecordingsFileListActivity extends AppCompatActivity {
         //When item in list is clicked, file name is sent to server for downloading
         mRecordingsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(final AdapterView<?> adapterView, View view, int i, long l) {
-                // Request storage permission
-                int STORAGE_PERMISSION_CODE = 1;
-                final String selectedFile = (String) adapterView.getItemAtPosition(i);
-
-
-                if(ContextCompat.checkSelfPermission(RecordingsFileListActivity.this,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-                    new DownloadFileAsyncTask(ip, selectedFile, "video_storage", RecordingsFileListActivity.this).execute();
-
-                } else if(ActivityCompat.shouldShowRequestPermissionRationale(RecordingsFileListActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
-                    new AlertDialog.Builder(RecordingsFileListActivity.this)
-                            .setTitle("Storage Permission Needed")
-                            .setMessage("This permission is needed in order to download the file")
-                            .setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    new DownloadFileAsyncTask(ip, selectedFile, "video_storage", RecordingsFileListActivity.this).execute();
-
+            public void onItemClick(final AdapterView<?> adapterView, View view, final int i, long l) {
+                new AlertDialog.Builder(RecordingsFileListActivity.this)
+                        .setItems(R.array.listOptions, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int j) {
+                                switch (j) {
+                                    case 0 :
+                                    case 2:
+                                        Toast toast = Toast.makeText(RecordingsFileListActivity.this, "Function not yet implemented", Toast.LENGTH_SHORT);
+                                        toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+                                        toast.show();
+                                        break;
+                                    case 1:
+                                        downloadFile(adapterView, i);
+                                        break;
                                 }
-                            })
-                            .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    dialogInterface.dismiss();
-                                }
-                            })
-                            .create().show();
-
-                } else {
-                    ActivityCompat.requestPermissions(RecordingsFileListActivity.this, new String[] {
-                            Manifest.permission.WRITE_EXTERNAL_STORAGE}, STORAGE_PERMISSION_CODE);
-                }
 
 
+                            }
+                        })
+                        .create().show();
 
 
             }
@@ -118,19 +104,12 @@ public class RecordingsFileListActivity extends AppCompatActivity {
 
     public void setBottomNavigationIntents(BottomNavigationView bottomNavigationView) {
         Menu menu = bottomNavigationView.getMenu();
-        MenuItem menuItem = menu.getItem(3);
+        MenuItem menuItem = menu.getItem(2);
         menuItem.setChecked(true);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
-
-                    case R.id.home_icon:
-                        Intent homeIntent = new Intent(RecordingsFileListActivity.this, MainActivity.class);
-                        startActivity(homeIntent);
-                        break;
-
-
                     case R.id.stream_icon:
                         Intent streamIntent = new Intent(RecordingsFileListActivity.this, ViewStreamActivity.class);
                         startActivity(streamIntent);
@@ -157,4 +136,40 @@ public class RecordingsFileListActivity extends AppCompatActivity {
         new GetFileListAsyncTask(this, mRecordingsListView, ipList).execute();
     }
 
+    private void downloadFile(AdapterView adapterView, int i) {
+        // Request storage permission
+        int STORAGE_PERMISSION_CODE = 1;
+        final String selectedFile = (String) adapterView.getItemAtPosition(i);
+
+
+        if(ContextCompat.checkSelfPermission(RecordingsFileListActivity.this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+            new DownloadFileAsyncTask(ip, selectedFile, "video_storage", RecordingsFileListActivity.this).execute();
+
+        } else if(ActivityCompat.shouldShowRequestPermissionRationale(RecordingsFileListActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+            new AlertDialog.Builder(RecordingsFileListActivity.this)
+                    .setTitle("Storage Permission Needed")
+                    .setMessage("This permission is needed in order to download the file")
+                    .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            new DownloadFileAsyncTask(ip, selectedFile, "video_storage", RecordingsFileListActivity.this).execute();
+
+                        }
+                    })
+                    .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.dismiss();
+                        }
+                    })
+                    .create().show();
+
+        } else {
+            ActivityCompat.requestPermissions(RecordingsFileListActivity.this, new String[] {
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE}, STORAGE_PERMISSION_CODE);
+        }
+
+
+    }
 }

@@ -51,11 +51,13 @@ public class SettingsActivity extends PreferenceActivity {
                         String settingsString = settings.getAll().toString().toLowerCase();
 
                         String settingsJsonFormat = settingsString.replace('=', ':');
+                        settingsJsonFormat = settingsJsonFormat.replace('/',    '-');
+
 
                         JSONObject settingsJson = null;
                         try {
                             settingsJson = new JSONObject(settingsJsonFormat);
-                        new UpdatePiSettingsAsyncTask(settingsJson, ip).execute();
+                        new UpdatePiSettingsAsyncTask(SettingsActivity.this, settingsJson, ip).execute();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -69,13 +71,26 @@ public class SettingsActivity extends PreferenceActivity {
                     }
                 })
                 .create().show();
-
-
-
     }
 
+    @Override
+    public void onBackPressed() {
 
-
-
-
+        new AlertDialog.Builder(SettingsActivity.this)
+                .setTitle("Warning")
+                .setMessage("Changes to Pi settings will not be applied until you press 'Update Pi'")
+                .setPositiveButton("Continue", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        finish();
+                    }
+                })
+                .setNegativeButton("Stay on page", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                })
+                .create().show();
+    }
 }

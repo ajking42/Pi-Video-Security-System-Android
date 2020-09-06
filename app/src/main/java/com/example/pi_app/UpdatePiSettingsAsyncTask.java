@@ -1,5 +1,7 @@
 package com.example.pi_app;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.AsyncTask;
 
 import com.google.gson.JsonObject;
@@ -18,10 +20,19 @@ import okhttp3.Response;
 public class UpdatePiSettingsAsyncTask extends AsyncTask<JSONObject, Void, Void> {
     private JSONObject preferences;
     private WeakReference<String> ipRef;
+    private ProgressDialog progressDialog;
 
-    public UpdatePiSettingsAsyncTask(JSONObject jsonObject, String ip) {
+    public UpdatePiSettingsAsyncTask(Context context, JSONObject jsonObject, String ip) {
         preferences = jsonObject;
         ipRef = new WeakReference<>(ip);
+        progressDialog = new ProgressDialog(context);
+        progressDialog.setMessage("Restarting...");
+    }
+
+    @Override
+    protected void onPreExecute() {
+        progressDialog.show();
+        super.onPreExecute();
     }
 
     @Override
@@ -44,5 +55,11 @@ public class UpdatePiSettingsAsyncTask extends AsyncTask<JSONObject, Void, Void>
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    protected void onPostExecute(Void aVoid) {
+        super.onPostExecute(aVoid);
+        progressDialog.dismiss();
     }
 }

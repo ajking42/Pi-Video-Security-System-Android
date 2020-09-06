@@ -4,6 +4,10 @@
     <PreferenceCategory android:title="Android Settings"
         android:layout="@layout/activity_settings">
         <SwitchPreference
+            android:title="Dark Mode (unimplemented)"
+            />
+        <EditTextPreference
+            android:title="Storage Location (unimplemented)"
             />
 
 
@@ -45,12 +49,18 @@
             android:title="Max. Video Storage (MB)"
             android:inputType="number"/>
         <EditTextPreference
+            android:title="File Storage Location (unimplemented)"
+            android:key="directory"
+            android:inputType="text"
+            android:defaultValue="/home/pi/pi_security_system/pi_detection/"/>
+        <EditTextPreference
             android:defaultValue="5"
             android:key="notify_period"
             android:selectAllOnFocus="true"
             android:singleLine="true"
             android:title="Repeat Notification Period (s)"
             android:inputType="number"/>
+
     </PreferenceCategory>
 
 

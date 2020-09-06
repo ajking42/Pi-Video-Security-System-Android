@@ -32,6 +32,7 @@ public class SendFirebaseDeviceTokenAsyncTask extends AsyncTask<String, Void, St
                 .post(body)
                 .url(url)
                 .build();
+
         String responseString = "";
         try {
             Response response = client.newCall(request).execute();

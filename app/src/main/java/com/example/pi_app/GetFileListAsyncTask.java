@@ -1,5 +1,6 @@
 package com.example.pi_app;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.view.Gravity;
@@ -24,11 +25,20 @@ public class GetFileListAsyncTask extends AsyncTask <String, Void, ArrayList<Str
     private WeakReference<Context> contextRef;
     private WeakReference<String> ipRef;
     private boolean success;
+    private ProgressDialog progressDialog;
 
     public GetFileListAsyncTask(Context context, ListView listView, String ip) {
         contextRef = new WeakReference<Context>(context);
         mFileList = new WeakReference<ListView>(listView);
         ipRef = new WeakReference<String>(ip);
+        progressDialog = new ProgressDialog(context);
+        progressDialog.setMessage("Fetching File List...");
+    }
+
+    @Override
+    protected void onPreExecute() {
+        progressDialog.show();
+        super.onPreExecute();
     }
 
     @Override
@@ -64,6 +74,7 @@ public class GetFileListAsyncTask extends AsyncTask <String, Void, ArrayList<Str
         ArrayAdapter adapter = new ArrayAdapter<String>(contextRef.get(), R.layout.support_simple_spinner_dropdown_item, result);
         // Display files in listview using ArrayAdaptor
         mFileList.get().setAdapter(adapter);
+        progressDialog.dismiss();
         if(result.isEmpty() && success) {
             Toast toast = Toast.makeText(contextRef.get(), "No files found.", Toast.LENGTH_SHORT);
             toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);

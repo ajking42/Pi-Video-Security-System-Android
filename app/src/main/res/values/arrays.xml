@@ -15,5 +15,10 @@
         <item>Car</item>
     </string-array>
 
+    <string-array name="listOptions">
+        <item>View File</item>
+        <item>Download File</item>
+        <item>Delete File</item>
+    </string-array>
 
 </resources>

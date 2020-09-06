@@ -11,7 +11,6 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
@@ -54,17 +53,19 @@ public class ViewStreamActivity extends AppCompatActivity {
         ip = sp.getString("ip", "");
 
         streamView.setWebViewClient(new WebViewClient() {
+
             @Override
             public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
                 super.onReceivedError(view, request, error);
                 Toast toast = Toast.makeText(ViewStreamActivity.this, "Check connections and press sync", Toast.LENGTH_SHORT);
                 toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
                 toast.show();
+
             }
         });
 
-        streamView.loadUrl(ip + "streaming");
 
+        streamView.loadUrl(ip + "streaming");
 
     }
 
@@ -76,12 +77,6 @@ public class ViewStreamActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
-
-                    case R.id.home_icon:
-                        Intent homeIntent = new Intent(ViewStreamActivity.this, MainActivity.class);
-                        startActivity(homeIntent);
-                        break;
-
 
                     case R.id.stream_icon:
 
