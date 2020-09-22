@@ -27,40 +27,75 @@
             android:entries="@array/models"
             android:entryValues="@array/modelsData"
             android:defaultValue="ssd_mobilenet_v3_large"
-            android:summary="%s"/>
+            android:summary="%s" />
+        <EditTextPreference
+            android:defaultValue="0.6"
+            android:key="min_score"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="Minimum Object Confidence Score"
+            android:inputType="number"
+            android:summary="Sets the minimum confidence score required by the model to detect an object (must be a value between 0 and 1)"/>
         <MultiSelectListPreference
             android:defaultValue="@array/categories"
             android:entries="@array/categories"
             android:entryValues="@array/categories"
             android:key="categories"
-            android:title="Select Detection Categories" />
+            android:title="Select Detection Categories"
+            android:summary="Categories selected here will be saved for viewing in the Detections activity and notifications sent when they appear in view of the camera"/>
         <EditTextPreference
-            android:defaultValue="100"
+            android:defaultValue="@string/max_im_store_default"
             android:key="max_ImStorage"
             android:selectAllOnFocus="true"
             android:singleLine="true"
             android:title="Max. Image Storage (MB)"
-            android:inputType="number"/>
+            android:inputType="number"
+            android:summary="Sets the maximum amount of storage available to save images before old files are overwritten"/>
         <EditTextPreference
-            android:defaultValue="100"
+            android:defaultValue="@string/max_vid_store_default"
             android:key="max_VidStorage"
             android:selectAllOnFocus="true"
             android:singleLine="true"
             android:title="Max. Video Storage (MB)"
-            android:inputType="number"/>
+            android:inputType="number"
+            android:summary="Sets the maximum amount of storage available to save videos before old ones are overwritten"/>
         <EditTextPreference
             android:title="File Storage Location (unimplemented)"
             android:key="directory"
             android:inputType="text"
-            android:defaultValue="/home/pi/pi_security_system/pi_detection/"/>
+            android:defaultValue="/home/pi/pi_security_system/pi_detection/"
+            android:summary="Sets where files are to be stored on the Pi device"/>
         <EditTextPreference
             android:defaultValue="5"
             android:key="notify_period"
             android:selectAllOnFocus="true"
             android:singleLine="true"
             android:title="Repeat Notification Period (s)"
-            android:inputType="number"/>
-
+            android:inputType="number"
+            android:summary="Sets the period of time the system will wait before sending repeated notifications for objects in frame"/>
+        <ListPreference
+            android:title="Recorded Video FPS Estimator"
+            android:key="frame_count_secs"
+            android:entries="@array/fpsEstimator"
+            android:entryValues="@array/fpsEstimatorData"
+            android:defaultValue="absolute"
+            android:summary="%s" />
+        <EditTextPreference
+            android:defaultValue="100"
+            android:key="absolute_frame_count"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="Absolute Frame Number"
+            android:inputType="number"
+            android:summary="Sets the number of frames for each recorded video when Recorded Video FPS Estimator is set to Absolute Frame Count"/>
+        <EditTextPreference
+            android:defaultValue="30"
+            android:key="approx_secs"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="Approximate Video Seconds"
+            android:inputType="number"
+            android:summary="Sets the number of frames for each recorded video when Recorded Video FPS Estimator is set to Approximate Seconds"/>
     </PreferenceCategory>
 
 

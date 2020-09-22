@@ -21,4 +21,13 @@
         <item>Delete File</item>
     </string-array>
 
+    <string-array name="fpsEstimator">
+        <item>Absolute Frame Count</item>
+        <item>Approximate Seconds</item>
+    </string-array>
+    <string-array name="fpsEstimatorData">
+        <item>absolute</item>
+        <item>approx</item>
+    </string-array>
+
 </resources>

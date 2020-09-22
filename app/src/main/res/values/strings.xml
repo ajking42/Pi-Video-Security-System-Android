@@ -1,3 +1,8 @@
 <resources>
-    <string name="app_name">Pi_App</string>
+    <string name="app_name">Home Security App</string>
+    <string name="detections">Detections</string>
+    <string name="view_stream">View Stream</string>
+    <string name="recordings">Recordings</string>
+    <string name="max_vid_store_default">10000</string>
+    <string name="max_im_store_default">10000</string>
 </resources>

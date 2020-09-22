@@ -28,9 +28,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import okhttp3.OkHttpClient;
 
 public class RecordingsFileListActivity extends AppCompatActivity {
-    private OkHttpClient client = new OkHttpClient.Builder().build();
     private ListView mRecordingsListView;
-    private Button mrefreshButton;
     private String ip;
 
     @Override
@@ -53,7 +51,7 @@ public class RecordingsFileListActivity extends AppCompatActivity {
 
 
 
-        //When item in list is clicked, file name is sent to server for downloading
+        //When item in list is clicked, AlertDialog is displayed with options
         mRecordingsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(final AdapterView<?> adapterView, View view, final int i, long l) {
@@ -122,7 +120,8 @@ public class RecordingsFileListActivity extends AppCompatActivity {
                         break;
 
                     case R.id.video_icon:
-
+                        Intent recordingIntent = new Intent(RecordingsFileListActivity.this, RecordingsFileListActivity.class);
+                        startActivity(recordingIntent);
                         break;
                 }
 
@@ -169,7 +168,5 @@ public class RecordingsFileListActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(RecordingsFileListActivity.this, new String[] {
                     Manifest.permission.WRITE_EXTERNAL_STORAGE}, STORAGE_PERMISSION_CODE);
         }
-
-
     }
 }

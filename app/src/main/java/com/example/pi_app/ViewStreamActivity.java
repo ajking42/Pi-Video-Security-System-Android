@@ -79,7 +79,8 @@ public class ViewStreamActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
 
                     case R.id.stream_icon:
-
+                        Intent streamIntent = new Intent(ViewStreamActivity.this, ViewStreamActivity.class);
+                        startActivity(streamIntent);
                         break;
 
 

@@ -7,7 +7,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.pi_app"
-        minSdkVersion 16
+        minSdkVersion 22
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -34,5 +34,20 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support:support-annotations:24.0.0'
+    androidTestImplementation 'com.android.support.test:runner:0.5'
+    implementation 'com.google.firebase:firebase-analytics:17.5.0'
+
+    //Espresso
+    androidTestImplementation 'androidx.test.espresso:espresso-intents:3.1.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
+    androidTestImplementation 'androidx.test:runner:1.1.0'
+    androidTestImplementation 'androidx.test:rules:1.1.0'
+
+    //Barista
+    androidTestImplementation('com.schibsted.spain:barista:3.6.0')
 
 }
+apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'

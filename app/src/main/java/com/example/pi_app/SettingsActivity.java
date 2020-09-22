@@ -34,6 +34,7 @@ public class SettingsActivity extends PreferenceActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        PreferenceManager.setDefaultValues(this, R.xml.main_preferences, false);
         addPreferencesFromResource(R.xml.main_preferences);
         SharedPreferences sp = getSharedPreferences("sp", MODE_PRIVATE);
         ip = sp.getString("ip", "");

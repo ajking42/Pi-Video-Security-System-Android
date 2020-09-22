@@ -4,15 +4,15 @@
     <item
         android:id="@+id/stream_icon"
         android:icon="@drawable/stream_icon_foreground"
-        android:title="View Stream" />
+        android:title="@string/view_stream" />
     <item
         android:id="@+id/detections_icon"
         android:icon="@drawable/detection_icon_foreground"
-        android:title="Detections"/>
+        android:title="@string/detections"/>
     <item
         android:id="@+id/video_icon"
         android:icon="@drawable/recording_icon_foreground"
-        android:title="Recordings"/>
+        android:title="@string/recordings"/>
 
 
 </menu>
