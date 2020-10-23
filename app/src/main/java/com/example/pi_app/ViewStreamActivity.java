@@ -36,11 +36,12 @@ public class ViewStreamActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ip = "http://192.168.0.23:5000/";
         //Initialise shared preferences to store base server url
         getFirebaseID();
         mPreferences = getSharedPreferences("sp", MODE_PRIVATE);
         SharedPreferences.Editor preferencesEditor = mPreferences.edit();
-        preferencesEditor.putString("ip", "http://192.168.0.23:5000/");
+        preferencesEditor.putString("ip", ip);
         preferencesEditor.apply();
         setContentView(R.layout.activity_view_stream);
         streamView = findViewById(R.id.streamWebView);
@@ -132,7 +133,7 @@ public class ViewStreamActivity extends AppCompatActivity {
 
                         // Get new Instance ID token
                         String token = task.getResult().getToken();
-                        new SendFirebaseDeviceTokenAsyncTask(token, "http://192.168.0.23:5000/").execute();
+                        new SendFirebaseDeviceTokenAsyncTask(token, ip).execute();
 
                         System.out.println(token);
                     }

@@ -60,7 +60,7 @@ public class SettingsActivityTest {
     public void testUpdatePiCancel() {
         onView(withId(R.id.updateButton)).perform(click());
         onView(withText("Warning")).check(matches(isDisplayed()));
-        onView(withText("Cancel")).perform(click());
+        onView(withText("Cancel")).perform(click()); 
     }
 
     @Test

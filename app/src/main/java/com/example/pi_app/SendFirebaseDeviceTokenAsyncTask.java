@@ -22,7 +22,7 @@ public class SendFirebaseDeviceTokenAsyncTask extends AsyncTask<String, Void, St
 
     @Override
     protected String doInBackground(String... strings) {
-        String url = ipRef.get() + "/setToken";
+        String url = ipRef.get() + "setToken";
         OkHttpClient client = new OkHttpClient.Builder().build();
         RequestBody body = new FormBody.Builder()
                 .add("token", deviceTokenRef.get())
